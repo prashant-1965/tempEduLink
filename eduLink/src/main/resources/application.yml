@@ -1,0 +1,23 @@
+server:
+  port: 8081
+logging:
+  level:
+    root: INFO
+    org.hibernate: WARN
+    org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl: WARN
+spring:
+  application:
+    name: ems
+  datasource:
+    url: jdbc:mysql://localhost:3306/edulink
+    username: root
+    password: prasha
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: false
