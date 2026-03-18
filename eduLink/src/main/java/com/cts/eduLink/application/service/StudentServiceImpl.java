@@ -6,6 +6,7 @@ import com.cts.eduLink.application.dto.StudentRegistrationDto;
 import com.cts.eduLink.application.entity.AppUser;
 import com.cts.eduLink.application.entity.Role;
 import com.cts.eduLink.application.entity.Student;
+import com.cts.eduLink.application.projection.StudentDetailByIdProjection;
 import com.cts.eduLink.application.repository.RoleRepository;
 import com.cts.eduLink.application.repository.StudentRepository;
 import com.cts.eduLink.application.util.ClassSeparatorUtils;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -56,5 +58,22 @@ public class StudentServiceImpl implements IStudentService {
         int enrollCount = studentRepository.studentCourseEnrollCount(studentId);
         log.info("Successfully retrieved enrollment count for Student ID: {}. Count: {}", studentId, enrollCount);
         return studentRepository.studentCourseEnrollCount(studentId);
+    }
+
+    @Override
+    public StudentDetailByIdProjection findStudentDetailsById(Long studentId) throws StudentException{
+        log.info("Initiating request to find details for student ID: {}", studentId);
+        Optional<Student> student = studentRepository.findStudentById(studentId);
+        if(student.isEmpty()){
+            log.error("Lookup failed: Student ID {} does not exist.", studentId);
+            throw new StudentException("Student is not register into the system with id: "+studentId,HttpStatus.UNAUTHORIZED);
+        }
+        Optional<StudentDetailByIdProjection> studentDetailByIdProjections = studentRepository.findStudentDetailsById(studentId);
+        if(studentDetailByIdProjections.isEmpty()){
+            log.warn("Student ID {} found, but no profile details are available.", studentId);
+            throw new StudentException("No details available for student id: "+studentId,HttpStatus.NOT_FOUND);
+        }
+        log.info("Successfully retrieved details for student ID: {}", studentId);
+        return studentDetailByIdProjections.get();
     }
 }
