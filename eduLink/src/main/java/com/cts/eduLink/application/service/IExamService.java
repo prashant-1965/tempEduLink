@@ -1,4 +1,7 @@
 package com.cts.eduLink.application.service;
 
-public class IExamService {
+import com.cts.eduLink.application.dto.ExamRegistrationDto;
+
+public interface IExamService {
+    String registerExam(ExamRegistrationDto examRegistrationDto);
 }

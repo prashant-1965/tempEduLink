@@ -1,9 +1,6 @@
 package com.cts.eduLink.application.util;
 
-import com.cts.eduLink.application.dto.CourseRegistrationDto;
-import com.cts.eduLink.application.dto.FacultyRegistrationDto;
-import com.cts.eduLink.application.dto.FeedbackDto;
-import com.cts.eduLink.application.dto.StudentRegistrationDto;
+import com.cts.eduLink.application.dto.*;
 import com.cts.eduLink.application.entity.*;
 
 import java.time.LocalDateTime;
@@ -65,5 +62,13 @@ public class ClassSeparatorUtils {
         feedBack.setMessage(feedbackDto.getComment());
         feedBack.setRating(feedbackDto.getRating());
         return feedBack;
+    }
+
+    public static Exam examDtoSeparator(ExamRegistrationDto examRegistrationDto){
+        Exam exam = new Exam();
+        exam.setExamName(examRegistrationDto.getExamName());
+        exam.setExamStatus("ACTIVE");
+        exam.setExamLocalDateTime(LocalDateTime.now());
+        return exam;
     }
 }
