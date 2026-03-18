@@ -120,7 +120,19 @@ public class CourseServiceImpl implements ICourseService{
     }
 
     @Override
-    public List<CourseDetailProjection> findCourseListByStudentId(Long studentId) {
-        return List.of();
+    public List<CourseDetailProjection> findCourseListByStudentId(Long studentId) throws CourseException,StudentException{
+        log.info("Fetching course list for student ID: {}", studentId);
+        Optional<Student> student = studentRepository.findStudentById(studentId);
+        if(student.isEmpty()){
+            log.error("Student lookup failed: ID {} not registered", studentId);
+            throw new StudentException("Student is not registered with id: "+studentId,HttpStatus.UNAUTHORIZED);
+        }
+        List<CourseDetailProjection> courseDetailProjections = courseRepository.findCourseListByStudentId(studentId);
+        if(courseDetailProjections.isEmpty()){
+            log.warn("No courses found for student ID: {}", studentId);
+            throw new CourseException("No course available for student id: "+studentId,HttpStatus.NOT_FOUND);
+        }
+        log.info("Successfully retrieved {} courses for student ID: {}", courseDetailProjections.size(), studentId);
+        return courseDetailProjections;
     }
 }

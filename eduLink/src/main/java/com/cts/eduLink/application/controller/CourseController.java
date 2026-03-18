@@ -32,24 +32,25 @@ public class CourseController {
         log.info("User requested for details of courseId: {} ",courseId);
         return ResponseEntity.status(200).body(iCourseService.findCourseDetailsById(courseId));
     }
-
     @GetMapping("/findAllAvailableCourse")
     public ResponseEntity<List<CourseDetailProjection>> findALlAvailableCourse(){
         log.info("User has called the endpoint successFully to fetch all available courses");
         return ResponseEntity.status(200).body(iCourseService.findAllAvailableCourse());
     }
-
     @GetMapping("/allCourseListByStudentId/{studentId}")
-    public ResponseEntity<List<CourseDetailProjection>> findCourseListByStudentId(Long studentId){
+    public ResponseEntity<List<CourseDetailProjection>> findCourseListByStudentId(@PathVariable Long studentId){
+        log.info("Received GET request: Fetching courses for studentId: {}", studentId);
         return ResponseEntity.status(200).body(iCourseService.findCourseListByStudentId(studentId));
     }
 
     @PatchMapping("/enrollmentRequest")
     public ResponseEntity<String> courseEnrollmentRequest(@RequestBody CourseEnrollmentDto courseEnrollmentDto){
+        log.info("Received PATCH request: Enrollment attempt for Student: {} on Course: {}",courseEnrollmentDto.getStudentId(), courseEnrollmentDto.getCourseId());
         return ResponseEntity.status(200).body(iCourseService.courseEnrollmentRequest(courseEnrollmentDto));
     }
     @PatchMapping("/updateRating/{courseId}/{newCourseRating}")
     public ResponseEntity<String> updateCourseRating(@PathVariable Long courseId, @PathVariable double newCourseRating){
+        log.info("Received PATCH request: Updating rating for courseId: {} to {}", courseId, newCourseRating);
         return ResponseEntity.status(200).body(iCourseService.updateCourseRating(courseId,newCourseRating));
     }
 }
