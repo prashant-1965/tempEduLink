@@ -80,6 +80,8 @@ public class ClassSeparatorUtils {
         grade.setStatus("COMPLETED");
         String studentGrade = GradeCalculator.calculateGrade(gradeRegistrationDto.getScore());
         grade.setGrade(studentGrade);
+        Long gradeId = UIDGeneratorUtils.uidGenerator();
+        grade.setGradeId(gradeId);
         return  grade;
     }
 }

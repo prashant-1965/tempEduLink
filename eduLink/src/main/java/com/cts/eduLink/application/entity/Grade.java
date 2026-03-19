@@ -10,6 +10,7 @@ public class Grade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long gradeId;
     private double score;
     private String status;
     private String grade;

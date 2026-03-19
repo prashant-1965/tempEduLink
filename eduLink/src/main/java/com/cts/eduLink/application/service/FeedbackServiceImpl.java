@@ -4,11 +4,8 @@ import com.cts.eduLink.application.classexception.AppUserException;
 import com.cts.eduLink.application.classexception.FeedbackException;
 import com.cts.eduLink.application.dto.FeedbackDto;
 import com.cts.eduLink.application.entity.AppUser;
-import com.cts.eduLink.application.entity.Faculty;
 import com.cts.eduLink.application.entity.FeedBack;
-import com.cts.eduLink.application.entity.Student;
 import com.cts.eduLink.application.projection.FeedbackProjection;
-import com.cts.eduLink.application.repository.AppUserRepository;
 import com.cts.eduLink.application.repository.FacultyRepository;
 import com.cts.eduLink.application.repository.FeedBackRepository;
 import com.cts.eduLink.application.repository.StudentRepository;
@@ -19,14 +16,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
 @Slf4j
 @Service
-public class FeedbackServiceImpl implements FeedbackService {
+public class FeedbackServiceImpl implements IFeedbackService {
 
     private final FeedBackRepository feedBackRepository;
     private final StudentRepository studentRepository;
@@ -45,9 +41,8 @@ public class FeedbackServiceImpl implements FeedbackService {
             log.debug("Fetching AppUser from faculty repository for ID: {}", feedbackDto.getUserId());
             appUser = facultyRepository.findAppUserByFacultyId(feedbackDto.getUserId());
         }
-        if (appUser.isEmpty() || appUser.isEmpty()){
-            log.error("Feedback registration failed: No AppUser found for ID: {} and Type: {}",
-                    feedbackDto.getUserId(), feedbackDto.getReviewerType());
+        if (appUser.isEmpty()){
+            log.error("Feedback registration failed: No AppUser found for ID: {} and Type: {}", feedbackDto.getUserId(), feedbackDto.getReviewerType());
             throw new AppUserException("Invalid feedback type", HttpStatus.BAD_REQUEST);
         }
         FeedBack feedBack = ClassSeparatorUtils.feedBackDtoSeparator(feedbackDto);

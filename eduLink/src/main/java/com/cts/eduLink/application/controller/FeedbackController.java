@@ -2,7 +2,7 @@ package com.cts.eduLink.application.controller;
 
 import com.cts.eduLink.application.dto.FeedbackDto;
 import com.cts.eduLink.application.projection.FeedbackProjection;
-import com.cts.eduLink.application.service.FeedbackService;
+import com.cts.eduLink.application.service.IFeedbackService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 public class FeedbackController {
 
-    private final FeedbackService feedbackService;
+    private final IFeedbackService feedbackService;
 
     @PostMapping("/register")
     public ResponseEntity<String> registerFeedback(@RequestBody FeedbackDto feedbackDto){

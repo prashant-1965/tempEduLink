@@ -5,7 +5,7 @@ import com.cts.eduLink.application.projection.FeedbackProjection;
 
 import java.util.List;
 
-public interface FeedbackService {
+public interface IFeedbackService {
     String registerFeedback(FeedbackDto feedbackDto);
     List<FeedbackProjection> findFeedBackList();
 }

@@ -1,6 +1,7 @@
 package com.cts.eduLink.application.service;
 
 import com.cts.eduLink.application.classexception.ExamException;
+import com.cts.eduLink.application.classexception.GradeException;
 import com.cts.eduLink.application.classexception.StudentException;
 import com.cts.eduLink.application.dto.GradeRegistrationDto;
 import com.cts.eduLink.application.entity.Exam;
@@ -45,5 +46,18 @@ public class GradeServiceImpl implements IGradeService{
         gradeRepository.save(grade);
         log.info("Successfully registered grade for Student: {} in Exam: {}",student.get().getStudentId(), exam.get().getExamName());
         return "Thanks for completing the exam";
+    }
+
+    @Override
+    public String findGradeStatus(Long gradeId) throws GradeException {
+        log.info("Fetching grade status for ID: {}", gradeId);
+        Optional<Grade> grade = gradeRepository.findGradeById(gradeId);
+        if(grade.isEmpty()){
+            log.error("Grade lookup failed: No assignment found with ID {}", gradeId);
+            throw new GradeException("NO assignment available with id: "+gradeId,HttpStatus.NOT_FOUND);
+        }
+        String status = gradeRepository.findGradeStatus(gradeId);
+        log.debug("Successfully retrieved status '{}' for grade ID: {}", status, gradeId);
+        return status;
     }
 }
