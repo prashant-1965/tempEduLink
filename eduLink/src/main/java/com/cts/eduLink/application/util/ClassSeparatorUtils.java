@@ -69,6 +69,17 @@ public class ClassSeparatorUtils {
         exam.setExamName(examRegistrationDto.getExamName());
         exam.setExamStatus("ACTIVE");
         exam.setExamLocalDateTime(LocalDateTime.now());
+        Long examId = UIDGeneratorUtils.uidGenerator();
+        exam.setExamId(examId);
         return exam;
+    }
+
+    public static Grade gradeDtoSeparator(GradeRegistrationDto gradeRegistrationDto){
+        Grade grade = new Grade();
+        grade.setScore(gradeRegistrationDto.getScore());
+        grade.setStatus("COMPLETED");
+        String studentGrade = GradeCalculator.calculateGrade(gradeRegistrationDto.getScore());
+        grade.setGrade(studentGrade);
+        return  grade;
     }
 }

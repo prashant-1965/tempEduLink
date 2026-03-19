@@ -12,6 +12,8 @@ public class Exam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private Long examId;
     private LocalDateTime examLocalDateTime;
     private String examName;
     private String examStatus;

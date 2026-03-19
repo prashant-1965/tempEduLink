@@ -33,6 +33,7 @@ public class CourseServiceImplTest {
     @Mock
     private StudentRepository studentRepository;
 
+
     private  CourseServiceImpl courseService;
     private  List<CourseDetailProjection> courseDetailProjectionList;
     private Optional<CourseDetailByIdProjection> courseDetailByIdProjection;
