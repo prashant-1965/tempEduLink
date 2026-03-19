@@ -1,5 +1,6 @@
 package com.cts.eduLink.application.service;
 
+import com.cts.eduLink.application.classexception.CourseException;
 import com.cts.eduLink.application.classexception.ExamException;
 import com.cts.eduLink.application.classexception.GradeException;
 import com.cts.eduLink.application.classexception.StudentException;
@@ -59,5 +60,18 @@ public class GradeServiceImpl implements IGradeService{
         String status = gradeRepository.findGradeStatus(gradeId);
         log.debug("Successfully retrieved status '{}' for grade ID: {}", status, gradeId);
         return status;
+    }
+
+    @Override
+    public double findTotalGradeByStudentId(Long studentId) {
+        log.info("Calculating total grade for student ID: {}", studentId);
+        Optional<Grade> grade = gradeRepository.checkStudentAvailableInGrade(studentId);
+        if(grade.isEmpty()){
+            log.warn("Grade calculation aborted: Student ID {} has no recorded tests.", studentId);
+            throw new CourseException(studentId+" is not given any test yet!",HttpStatus.NOT_FOUND);
+        }
+        double totalGrade = gradeRepository.findGradeByStudentId(studentId);
+        log.info("Total grade for student ID {}: {}", studentId, totalGrade);
+        return totalGrade;
     }
 }

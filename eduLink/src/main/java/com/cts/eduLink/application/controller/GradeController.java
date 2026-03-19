@@ -16,11 +16,19 @@ public class GradeController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerGrade(@RequestBody GradeRegistrationDto gradeRegistrationDto){
+        log.info("Received request to register grade for student: {}", gradeRegistrationDto.getStudentId());
         return ResponseEntity.status(200).body(gradeService.registerGrade(gradeRegistrationDto));
     }
 
     @GetMapping("/status/{gradeId}")
     public ResponseEntity<String> getGradeStatusById(@PathVariable Long gradeId){
+        log.info("API call: Fetching status for grade ID: {}", gradeId);
         return ResponseEntity.status(200).body(gradeService.findGradeStatus(gradeId));
+    }
+
+    @GetMapping("/totalGrade/{studentId}")
+    public ResponseEntity<Double> findTotalGradeByStudentId(@PathVariable Long studentId){
+        log.info("API call: Calculating total grade for student ID: {}", studentId);
+        return ResponseEntity.status(200).body(gradeService.findTotalGradeByStudentId(studentId));
     }
 }
