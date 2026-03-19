@@ -8,9 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -29,4 +26,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
             " from Student s "+
             " inner join s.appUser a where s.studentId = :studentId")
     Optional<StudentDetailByIdProjection> findStudentDetailsById(@Param("studentId") Long studentId);
+
+    @Query("select s from Student s inner join s.courseSet c where c.courseId = :courseId and s.studentId = :studentId")
+    Optional<Student> checkStudentRegisteredcourse(@Param("studentId") Long studentId, @Param("courseId") Long courseId);
 }

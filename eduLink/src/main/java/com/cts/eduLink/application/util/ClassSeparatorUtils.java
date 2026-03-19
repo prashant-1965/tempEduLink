@@ -84,4 +84,10 @@ public class ClassSeparatorUtils {
         grade.setGradeId(gradeId);
         return  grade;
     }
+
+    public static Attendance attendanceDtoSeparator(AttendanceRegistrationDto attendanceRegistrationDto){
+        Attendance attendance = new Attendance();
+        attendance.setLocalDateTime(LocalDateTime.now());
+        return attendance;
+    }
 }
