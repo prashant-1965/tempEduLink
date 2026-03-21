@@ -5,10 +5,9 @@ import com.cts.eduLink.application.classexception.ExamException;
 import com.cts.eduLink.application.dto.ExamRegistrationDto;
 import com.cts.eduLink.application.entity.Course;
 import com.cts.eduLink.application.entity.Exam;
-import com.cts.eduLink.application.entity.Faculty;
 import com.cts.eduLink.application.repository.CourseRepository;
 import com.cts.eduLink.application.repository.ExamRepository;
-import com.cts.eduLink.application.util.ClassSeparatorUtils;
+import com.cts.eduLink.application.util.DtoMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -33,7 +32,7 @@ public class ExamServiceImpl implements IExamService{
             log.error("Registration failed: Course ID {} not found", examRegistrationDto.getCourseId());
             throw new CourseException("No course is not register with id "+examRegistrationDto.getCourseId(), HttpStatus.BAD_REQUEST);
         }
-        Exam exam = ClassSeparatorUtils.examDtoSeparator(examRegistrationDto);
+        Exam exam = DtoMapper.examDtoSeparator(examRegistrationDto);
         exam.setCourse(course.get());
         examRepository.save(exam);
         log.info("Successfully registered exam with ID: {} for course: {}", exam.getId(), examRegistrationDto.getExamName());

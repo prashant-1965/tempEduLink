@@ -5,7 +5,6 @@ import com.cts.eduLink.application.classexception.FacultyException;
 import com.cts.eduLink.application.classexception.StudentException;
 import com.cts.eduLink.application.dto.CourseEnrollmentDto;
 import com.cts.eduLink.application.dto.CourseRegistrationDto;
-import com.cts.eduLink.application.entity.AppUser;
 import com.cts.eduLink.application.entity.Course;
 import com.cts.eduLink.application.entity.Faculty;
 import com.cts.eduLink.application.entity.Student;
@@ -14,7 +13,7 @@ import com.cts.eduLink.application.projection.CourseDetailProjection;
 import com.cts.eduLink.application.repository.CourseRepository;
 import com.cts.eduLink.application.repository.FacultyRepository;
 import com.cts.eduLink.application.repository.StudentRepository;
-import com.cts.eduLink.application.util.ClassSeparatorUtils;
+import com.cts.eduLink.application.util.DtoMapper;
 import com.cts.eduLink.application.util.RatingCalculator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +43,7 @@ public class CourseServiceImpl implements ICourseService{
             throw new FacultyException(courseRegistrationDto.getFacultyId()+" is not registered",HttpStatus.BAD_REQUEST);
         }
         log.error("Unable to separate faculty from courseRegistrationDto");
-        Course course = ClassSeparatorUtils.facultyDtoSeparator(courseRegistrationDto);
+        Course course = DtoMapper.facultyDtoSeparator(courseRegistrationDto);
         course.setCourseStatus("ACTIVE");
         course.getFacultySet().add(facultyOption.get());
         facultyOption.get().getCourseSet().add(course);

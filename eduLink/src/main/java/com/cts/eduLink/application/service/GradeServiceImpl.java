@@ -11,13 +11,12 @@ import com.cts.eduLink.application.entity.Student;
 import com.cts.eduLink.application.repository.ExamRepository;
 import com.cts.eduLink.application.repository.GradeRepository;
 import com.cts.eduLink.application.repository.StudentRepository;
-import com.cts.eduLink.application.util.ClassSeparatorUtils;
+import com.cts.eduLink.application.util.DtoMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.Optional;
 
 @Service
@@ -41,7 +40,7 @@ public class GradeServiceImpl implements IGradeService{
             log.error("Grade registration failed: Exam ID {} not found", gradeRegistrationDto.getExamId());
             throw new ExamException("No exam available with id: "+gradeRegistrationDto.getExamId(),HttpStatus.NOT_FOUND);
         }
-        Grade grade = ClassSeparatorUtils.gradeDtoSeparator(gradeRegistrationDto);
+        Grade grade = DtoMapper.gradeDtoSeparator(gradeRegistrationDto);
         grade.setExam(exam.get());
         grade.setStudent(student.get());
         gradeRepository.save(grade);

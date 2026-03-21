@@ -8,7 +8,7 @@ import com.cts.eduLink.application.entity.Role;
 import com.cts.eduLink.application.projection.FacultyDetailProjection;
 import com.cts.eduLink.application.repository.FacultyRepository;
 import com.cts.eduLink.application.repository.RoleRepository;
-import com.cts.eduLink.application.util.ClassSeparatorUtils;
+import com.cts.eduLink.application.util.DtoMapper;
 import com.cts.eduLink.application.util.RatingCalculator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,8 +36,8 @@ public class FacultyServiceImpl implements IFacultyService {
     public String registerFaculty(FacultyRegistrationDto facultyRegistrationDto) {
 
         log.debug("AppUser and Faculty separation initiated");
-        AppUser appUser = ClassSeparatorUtils.appUserDtoSeparator(facultyRegistrationDto);
-        Faculty faculty = ClassSeparatorUtils.facultyDtoSeparator(facultyRegistrationDto);
+        AppUser appUser = DtoMapper.appUserDtoSeparator(facultyRegistrationDto);
+        Faculty faculty = DtoMapper.facultyDtoSeparator(facultyRegistrationDto);
         Optional<Role> role = roleRepository.findRoleByName("FACULTY");
 
         appUser.setRole(role.get());

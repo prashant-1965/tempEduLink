@@ -9,14 +9,13 @@ import com.cts.eduLink.application.entity.Student;
 import com.cts.eduLink.application.projection.StudentDetailByIdProjection;
 import com.cts.eduLink.application.repository.RoleRepository;
 import com.cts.eduLink.application.repository.StudentRepository;
-import com.cts.eduLink.application.util.ClassSeparatorUtils;
+import com.cts.eduLink.application.util.DtoMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -33,8 +32,8 @@ public class StudentServiceImpl implements IStudentService {
     public String registerStudent(StudentRegistrationDto studentRegistrationDto) throws StudentException, AppUserException {
         log.info("Initiating student registration for user: {}", studentRegistrationDto.getUserEmail());
         log.debug("Extracting student and user entities from DTO");
-        Student student = ClassSeparatorUtils.studentDtoSeparator(studentRegistrationDto);
-        AppUser appUser = ClassSeparatorUtils.appUserDtoSeparator(studentRegistrationDto);
+        Student student = DtoMapper.studentDtoSeparator(studentRegistrationDto);
+        AppUser appUser = DtoMapper.appUserDtoSeparator(studentRegistrationDto);
         log.info("Extraction completed for student and user entities from DTO");
         Optional<Role> role = roleRepository.findRoleByName("STUDENT");
         appUser.setRole(role.get());

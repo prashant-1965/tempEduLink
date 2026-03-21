@@ -5,7 +5,7 @@ import com.cts.eduLink.application.entity.*;
 
 import java.time.LocalDateTime;
 
-public class ClassSeparatorUtils {
+public class DtoMapper {
 
     public static Student studentDtoSeparator(StudentRegistrationDto studentDto){
         Student student = new Student();
