@@ -36,4 +36,14 @@ public class GlobalException {
     public ResponseEntity<String> gradeExceptionHandler(GradeException g){
         return ResponseEntity.status(g.getHttpStatus()).body(g.getMessage());
     }
+
+    @ExceptionHandler(LearningMaterialException.class)
+    public ResponseEntity<String> learningMaterialExceptionHandler(LearningMaterialException l){
+        return ResponseEntity.status(l.getHttpStatus()).body(l.getMessage());
+    }
+
+    @ExceptionHandler(FileException.class)
+    public ResponseEntity<String> fileExceptionHandler(FileException f){
+        return ResponseEntity.status(f.getHttpStatus()).body(f.getMessage()+" "+f.getCause());
+    }
 }

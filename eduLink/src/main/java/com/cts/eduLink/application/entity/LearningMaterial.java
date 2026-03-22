@@ -14,9 +14,9 @@ public class LearningMaterial {
     private Long id;
 
     private String learningMaterialTitle;
-    private File learningMaterialFile;
+    private String learningMaterialFile;
     private LocalDateTime learningMaterialUploadedDate;
-    private String learningMaterialStatus;
+    private String learningMaterialStatus; // UPLOADED, pending
     @ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
