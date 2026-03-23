@@ -29,4 +29,6 @@ public class FacultyRegistrationDto {
     @Min(value = 0, message = "Experience cannot be negative")
     @Max(value = 60, message = "Experience seems unrealistic")
     private int facultyYearOfExperience;
+
+    private String password;
 }

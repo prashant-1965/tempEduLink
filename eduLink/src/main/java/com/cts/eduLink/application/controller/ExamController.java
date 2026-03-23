@@ -5,6 +5,7 @@ import com.cts.eduLink.application.dto.ExamRegistrationDto;
 import com.cts.eduLink.application.service.IExamService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ public class ExamController {
 
     private final IExamService examService;
 
+    @PreAuthorize("hasRole('FACULTY')")
     @PostMapping("/register")
     public ResponseEntity<String> registerExam(@RequestBody ExamRegistrationDto examRegistrationDto){
         return ResponseEntity.status(200).body(examService.registerExam(examRegistrationDto));

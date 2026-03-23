@@ -13,6 +13,7 @@ import com.cts.eduLink.application.util.RatingCalculator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,8 @@ public class FacultyServiceImpl implements IFacultyService {
     private final FacultyRepository facultyRepository;
     private final AppUserServiceImpl appUserService;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
 
     @Transactional
@@ -36,7 +39,7 @@ public class FacultyServiceImpl implements IFacultyService {
     public String registerFaculty(FacultyRegistrationDto facultyRegistrationDto) {
 
         log.debug("AppUser and Faculty separation initiated");
-        AppUser appUser = DtoMapper.appUserDtoSeparator(facultyRegistrationDto);
+        AppUser appUser = DtoMapper.appUserDtoSeparator(facultyRegistrationDto,passwordEncoder);
         Faculty faculty = DtoMapper.facultyDtoSeparator(facultyRegistrationDto);
         Optional<Role> role = roleRepository.findRoleByName("FACULTY");
 

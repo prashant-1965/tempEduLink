@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -28,6 +29,8 @@ public class StudentServiceImplTest {
     private RoleRepository roleRepository;
     @Mock
     private IAppUserService iAppUserService;
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     private StudentServiceImpl studentService;
 
@@ -37,7 +40,7 @@ public class StudentServiceImplTest {
 
     @BeforeEach
     public void setUp() {
-        studentService = new StudentServiceImpl(studentRepository,roleRepository, iAppUserService);
+        studentService = new StudentServiceImpl(studentRepository,roleRepository, iAppUserService,passwordEncoder);
         studentRegistrationDto = new StudentRegistrationDto();
         studentRegistrationDto.setUserName("Nihil");
         studentRegistrationDto.setUserEmail("nikhil@eduLink.com");

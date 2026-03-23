@@ -1,8 +1,8 @@
 package com.cts.eduLink.application.util;
 
-import com.cts.eduLink.application.classexception.FileException;
 import com.cts.eduLink.application.dto.*;
 import com.cts.eduLink.application.entity.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -21,11 +21,13 @@ public class DtoMapper {
         student.setStudentId(studentId);
         return student;
     }
-    public static AppUser appUserDtoSeparator(StudentRegistrationDto appUserDto){
+    public static AppUser appUserDtoSeparator(StudentRegistrationDto appUserDto,PasswordEncoder passwordEncoder){
         AppUser appUser = new AppUser();
         appUser.setUserEmail(appUserDto.getUserEmail());
         appUser.setUserName(appUserDto.getUserName());
         appUser.setPhoneNumber(appUserDto.getPhoneNumber());
+        String encodePassword = passwordEncoder.encode(appUserDto.getPassword());
+        appUser.setUserPassword(encodePassword);
         return appUser;
     }
 
@@ -53,11 +55,13 @@ public class DtoMapper {
         faculty.setFacultyId(facultyId);
         return faculty;
     }
-    public static AppUser appUserDtoSeparator(FacultyRegistrationDto facultyRegistrationDto){
+    public static AppUser appUserDtoSeparator(FacultyRegistrationDto facultyRegistrationDto,PasswordEncoder passwordEncoder){
         AppUser appUser = new AppUser();
         appUser.setUserName(facultyRegistrationDto.getUserName());
         appUser.setUserEmail(facultyRegistrationDto.getUserEmail());
         appUser.setPhoneNumber(facultyRegistrationDto.getPhoneNumber());
+        String encodePassword = passwordEncoder.encode(facultyRegistrationDto.getPassword());
+        appUser.setUserPassword(encodePassword);
         return appUser;
     }
 

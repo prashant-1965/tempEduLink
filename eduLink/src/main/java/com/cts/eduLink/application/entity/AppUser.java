@@ -16,6 +16,7 @@ public class AppUser {
     private String userName;
     private String userEmail;
     private Long phoneNumber;
+    private String userPassword;
 
     @ManyToOne
     @JoinColumn(name = "role_id")

@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,10 +27,13 @@ public class StudentController {
         return ResponseEntity.status(200).body(iStudentService.registerStudent(studentRegistrationDto));
     }
 
+    @PreAuthorize("hasRole('STUDENT')")
     @GetMapping("/enrolledList/{studentId}")
     public ResponseEntity<Integer> findCourseEnrollmentList(@PathVariable Long studentId){
         return ResponseEntity.status(200).body(iStudentService.studentCourseEnrollCount(studentId));
     }
+
+    @PreAuthorize("hasRole('STUDENT')")
     @GetMapping("/studentDetailsById/{studentId}")
     public ResponseEntity<StudentDetailByIdProjection> studentDetailsById(@PathVariable Long studentId){
         log.info("REST request received to fetch details for Student ID: {}", studentId);

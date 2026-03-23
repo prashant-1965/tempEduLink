@@ -30,4 +30,6 @@ public class StudentRegistrationDto {
 
     @NotBlank(message = "Address is required")
     private String studentAddress;
+
+    private String password;
 }

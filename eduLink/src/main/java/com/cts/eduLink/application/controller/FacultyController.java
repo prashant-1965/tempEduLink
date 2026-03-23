@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,12 +26,14 @@ public class FacultyController {
         return ResponseEntity.status(200).body(facultyService.registerFaculty(facultyRegistrationDto));
     }
 
+    @PreAuthorize("hasRole('STUDENT')")
     @GetMapping("/filterByRatting/{facultyRating}")
     public ResponseEntity<List<FacultyDetailProjection>> filterFacultyByRating(@PathVariable int facultyRating){
         log.info("Faculty filter request by ratting intercepted");
         return ResponseEntity.status(200).body(facultyService.filterFacultyByRating(facultyRating));
     }
 
+    @PreAuthorize("hasRole('STUDENT')")
     @PatchMapping("/updateRating/{facultyId}/{newFacultyRating}")
     public ResponseEntity<String> updateFacultyRating(@PathVariable Long facultyId, @PathVariable double newFacultyRating){
         return ResponseEntity.status(200).body(facultyService.updateFacultyRating(facultyId,newFacultyRating));
