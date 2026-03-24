@@ -1,4 +1,4 @@
-package com.cts.eduLink.security;
+package com.cts.eduLink.security.config;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

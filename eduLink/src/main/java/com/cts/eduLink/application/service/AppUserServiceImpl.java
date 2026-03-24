@@ -46,8 +46,10 @@ public class AppUserServiceImpl implements IAppUserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(@NonNull String userEmail) throws AppUserException {
+        log.debug("Attempting to load user by email: {}", userEmail);
         Optional<AppUser> appUser = appUserRepository.findByUserEmail(userEmail);
         if(appUser.isEmpty()){
+            log.warn("Login failure: User with email {} not found in database", userEmail);
             throw new AppUserException("Invalid login Details",HttpStatus.NOT_FOUND);
         }
         return new User(
